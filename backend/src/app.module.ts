@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
 import { TaskModule } from './task/task.module';
 import { UsersModule } from './users/users.module';

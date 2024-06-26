@@ -33,7 +33,14 @@ export class AuthService {
         const payload = { email: user.email }
         const token = await this.jwtService.signAsync(payload)
         return {
-            email, token
+            id: user.id, email, token,
         }
+    }
+
+    //Create a logout method
+    async logout(req) {
+        req.user = null
+        req.token = null
+        return { message: 'Logged out' }
     }
 }

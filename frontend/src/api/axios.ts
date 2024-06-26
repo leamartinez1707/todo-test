@@ -1,0 +1,10 @@
+import axios from "axios";
+import { VITE_API_HOST } from "../config";
+
+
+const instance = axios.create({
+    baseURL: VITE_API_HOST,
+    withCredentials: true
+})
+
+export default instance;

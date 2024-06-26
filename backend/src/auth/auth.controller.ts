@@ -38,6 +38,15 @@ export class AuthController {
     }
 
 
+    @Post('logout')
+    logout(
+        @Request()
+        req
+    ) {
+        return this.authService.logout(req)
+    }
+
+    
     @Get('me')
     @UseGuards(AuthGuard)
     profile(
