@@ -19,7 +19,7 @@ export default function ProtectedRoute() {
                 <Outlet />
             </section>
 
-            <footer className="py-5 absolute bottom-0 w-full">
+            <footer className="py-5 bottom-0 w-full">
                 <p className="bg-gray-800 text-white text-center py-5">
                     Todos los derechos reservados {new Date().getFullYear()}. Leandro Martínez ToDo App
                 </p>

@@ -13,8 +13,13 @@ export type Task = {
     id: number;
     title: string;
     description: string;
-    userId: number;
     expirateDate: Date;
     state: string;
     user: User['id']
+}
+
+export type TaskForm = {
+    title: string;
+    description: string;
+    state: string;
 }
