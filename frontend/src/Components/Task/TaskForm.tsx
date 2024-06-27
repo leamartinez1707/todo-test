@@ -1,15 +1,11 @@
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { ErrorMessage } from "../ErrorMessage";
-import { TaskForm } from "../../types";
+import type { TaskFormData } from "../../types/types";
 
 type TaskFormProps = {
 
-  register: UseFormRegister<TaskForm>
-  errors: FieldErrors<{
-    title: string;
-    description: string;
-    state: string;
-  }>
+  register: UseFormRegister<TaskFormData>
+  errors: FieldErrors<TaskFormData>
 }
 
 
@@ -58,18 +54,16 @@ export default function TaskForm({ register, errors }: TaskFormProps) {
         <label htmlFor="state" className="text-sm uppercase font-bold">
           Estado de la tarea
         </label>
-        <textarea
+        <select
           id="state"
           className="w-full p-3  border border-gray-200"
-          placeholder="Estado de la tarea"
           {...register("state", {
-            required: "Estado de tarea es obligatorio"
+            required: "El estado de la tarea es obligatorio",
           })}
-        />
-
-        {errors.description && (
-          <ErrorMessage>{errors.description.message}</ErrorMessage>
-        )}
+        >
+          <option defaultValue={'pendiente'} selected value="pendiente">Pendiente</option>
+          <option value="completada">Completada</option>
+        </select>
       </div>
     </>
   )

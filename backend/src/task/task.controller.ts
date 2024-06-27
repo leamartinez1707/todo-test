@@ -1,7 +1,8 @@
 /* eslint-disable prettier/prettier */
-import { Controller, Get, Post, Delete, Body, Param, NotFoundException, BadRequestException, Put } from "@nestjs/common";
+import { Controller, Get, Post, Delete, Body, Param, NotFoundException, BadRequestException, Put, UseGuards, Request } from "@nestjs/common";
 import { TaskService } from "./task.service";
 import { Task } from "@prisma/client";
+import { AuthGuard } from "src/auth/guard/auth.guard";
 
 
 @Controller('api/tasks')
@@ -9,15 +10,16 @@ export class TaskController {
 
     constructor(private readonly taskService: TaskService) { }
     @Get()
+    @UseGuards(AuthGuard)
     async getTasks() {
         try {
             return await this.taskService.getAllTasks()
-
         } catch (error) {
             throw new BadRequestException('Error al buscar las tareas')
         }
     }
     @Get(':id')
+    @UseGuards(AuthGuard)
     async getById(@Param('id') id: string) {
         try {
             const taskFound = await this.taskService.getTaskById(Number(id))
@@ -32,18 +34,22 @@ export class TaskController {
 
     }
     @Post()
+    @UseGuards(AuthGuard)
     async createTask(
-        @Body('userId') userId: number,
-        @Body() data: Task
+        @Body() data: Task,
+        @Request() req,
     ) {
         try {
-            const createdTask = await this.taskService.createTask(userId, data)
+            console.log(req.user)
+            data.userId = req.user.id
+            const createdTask = await this.taskService.createTask(data)
             return createdTask
         } catch (error) {
             throw new BadRequestException('La tarea no se pudo crear')
         }
     }
     @Put(':id')
+    @UseGuards(AuthGuard)
     async updateTask(@Param('id') id: string, @Body() data: Task) {
         try {
             const updatedTask = await this.taskService.updateTask(Number(id), data)
@@ -53,6 +59,7 @@ export class TaskController {
         }
     }
     @Delete(':id')
+    @UseGuards(AuthGuard)
     async deleteTask(@Param('id') id: string) {
         try {
             return await this.taskService.deleteTask(Number(id))

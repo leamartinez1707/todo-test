@@ -46,7 +46,7 @@ export class AuthController {
         return this.authService.logout(req)
     }
 
-    
+
     @Get('me')
     @UseGuards(AuthGuard)
     profile(

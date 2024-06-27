@@ -5,7 +5,6 @@ import { LoginPage } from "../Pages/LoginPage";
 import { RegisterPage } from "../Pages/RegisterPage";
 import { TaskPage } from "../Pages/TaskPage";
 
-
 export default function Router() {
 
     return (

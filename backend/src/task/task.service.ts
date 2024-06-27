@@ -8,7 +8,7 @@ export class TaskService {
 
     constructor(private prisma: PrismaService) { }
 
-    async createTask(userId: number, data: Task): Promise<Task> {
+    async createTask(data: Task): Promise<Task> {
 
         // Seteamos la fecha de expiración de la tarea
         const expiratedAt = new Date();
@@ -18,7 +18,6 @@ export class TaskService {
             data: {
                 ...data,
                 expirateDate: expiratedAt,
-                userId
             }
         });
     }

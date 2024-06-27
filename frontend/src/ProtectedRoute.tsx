@@ -1,5 +1,7 @@
 import { Outlet } from "react-router-dom"
 import NavMenu from "./Components/NavMenu"
+import { ToastContainer } from "react-toastify"
+import 'react-toastify/dist/ReactToastify.css'
 
 
 
@@ -24,7 +26,10 @@ export default function ProtectedRoute() {
                     Todos los derechos reservados {new Date().getFullYear()}. Leandro Martínez ToDo App
                 </p>
             </footer>
-
+            <ToastContainer
+                pauseOnHover={false}
+                pauseOnFocusLoss={false}
+            />
         </>
     )
 }

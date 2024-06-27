@@ -10,11 +10,12 @@ import { jwtConstants } from './constants';
     UsersModule,
     JwtModule.register({
       global: true,
-      secret: jwtConstants.secret,
+      secret: process.env.JWT_SECRET || jwtConstants.secret,
       signOptions: { expiresIn: '1d' },
     }),
   ],
   controllers: [AuthController],
   providers: [AuthService],
+  exports: [AuthService],
 })
 export class AuthModule {}

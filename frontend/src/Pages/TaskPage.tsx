@@ -1,19 +1,19 @@
 import { Link } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import TaskForm from "../Components/Task/TaskForm"
+import type { TaskFormData } from "../types/types"
 
 export const TaskPage = () => {
 
+  const initialValues: TaskFormData = {
+    title: "",
+    description: "",
+    state: "pendiente"
+  }
+  const { register, handleSubmit, formState: { errors } } = useForm({ defaultValues: initialValues })
 
-  const { register, handleSubmit, formState: { errors } } = useForm({
-    defaultValues: {
-      title: "",
-      description: "",
-      state: 'Pendiente'
-    }
-  })
-
-  const onSubmit = handleSubmit((data) => {
+  // Luego pasarle esta funcion al componente para que se ejecute cuando se haga submit
+  const onSubmit = handleSubmit((data: TaskFormData) => {
     console.log(data)
   })
 
