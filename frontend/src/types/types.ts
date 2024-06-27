@@ -24,7 +24,7 @@ export type Task = {
     description: string;
     expirateDate: Date;
     state: string;
-    user: User['id']
+    userId: User['id']
 }
 
 export type TaskFormData = Pick<Task, 'title' | 'description'> & {

@@ -10,7 +10,7 @@ export class TaskService {
 
     async createTask(data: Task): Promise<Task> {
 
-        // Seteamos la fecha de expiración de la tarea
+        // Seteamos la fecha de expiración de la tarea a 24 horas
         const expiratedAt = new Date();
         expiratedAt.setHours(expiratedAt.getHours() + 24);
 
@@ -21,8 +21,13 @@ export class TaskService {
             }
         });
     }
-    async getAllTasks(): Promise<Task[]> {
-        return this.prisma.task.findMany();
+    async getAllTasks(id: number): Promise<Task[]> {
+        const tasks = this.prisma.task.findMany({
+            where: {
+                userId: id
+            }
+        });
+        return tasks;
     }
     async getTaskById(id: number): Promise<Task> {
         return this.prisma.task.findUnique({

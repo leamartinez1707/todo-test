@@ -11,9 +11,11 @@ export class TaskController {
     constructor(private readonly taskService: TaskService) { }
     @Get()
     @UseGuards(AuthGuard)
-    async getTasks() {
+    async getTasks(
+        @Request() req,
+    ) {
         try {
-            return await this.taskService.getAllTasks()
+            return await this.taskService.getAllTasks(req.user.id)
         } catch (error) {
             throw new BadRequestException('Error al buscar las tareas')
         }
@@ -40,7 +42,6 @@ export class TaskController {
         @Request() req,
     ) {
         try {
-            console.log(req.user)
             data.userId = req.user.id
             const createdTask = await this.taskService.createTask(data)
             return createdTask
