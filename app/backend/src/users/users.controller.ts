@@ -3,7 +3,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, BadRequestException,
 import { UsersService } from './users.service';
 // import { CreateUserDto } from './dto/create-user.dto';
 // import { UpdateUserDto } from './dto/update-user.dto';
-import { User } from '@prisma/client';
+import { User } from "../../node_modules/.prisma/client";
 
 @Controller('api/users')
 export class UsersController {

@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "src/prisma/prisma.service";
-import { Task } from "@prisma/client";
+import { Task } from "../../node_modules/.prisma/client";
 
 @Injectable()
 export class TaskService {

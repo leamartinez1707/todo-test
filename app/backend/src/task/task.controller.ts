@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { Controller, Get, Post, Delete, Body, Param, NotFoundException, BadRequestException, Put, UseGuards, Request } from "@nestjs/common";
 import { TaskService } from "./task.service";
-import { Task } from "@prisma/client";
+import { Task } from "../../node_modules/.prisma/client";
 import { AuthGuard } from "src/auth/guard/auth.guard";
 
 
