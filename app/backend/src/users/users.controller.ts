@@ -5,7 +5,7 @@ import { UsersService } from './users.service';
 // import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from "../../node_modules/.prisma/client";
 
-@Controller('api/users')
+@Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) { }
 

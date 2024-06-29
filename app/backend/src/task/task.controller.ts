@@ -5,7 +5,7 @@ import { Task } from "../../node_modules/.prisma/client";
 import { AuthGuard } from "src/auth/guard/auth.guard";
 
 
-@Controller('api/tasks')
+@Controller('tasks')
 export class TaskController {
 
     constructor(private readonly taskService: TaskService) { }

@@ -1,9 +1,9 @@
 import axios from "axios";
-import { VITE_API_HOST } from "../config";
+import { VITE_URL } from "../config.ts";
 
 
 const api = axios.create({
-    baseURL: VITE_API_HOST,
+    baseURL: `${VITE_URL}/api/`,
     withCredentials: true
 })
 
