@@ -20,20 +20,30 @@ export const createTask = async (task: TaskFormData) => {
         return error.response.data.message[0]
     }
 }
-export const updateTask = async (task: Task) => {
+export const updateTask = async (id: number, task: Task) => {
     try {
-        const { data } = await axios.post('/tasks', task);
+        const { data } = await axios.put(`/tasks/${id}`, task);
         return data
     } catch (error: string | any) {
         if (typeof error.response.data.message === 'string') return error.response.data.message
         return error.response.data.message[0]
     }
 }
-export const deleteTask = async (task: TaskFormData) => {
+export const deleteTask = async (id: number) => {
     try {
-        const { data } = await axios.post('/tasks', task);
+        const { data } = await axios.delete('/tasks', id);
         return data
     } catch (error: string | any) {
+        if (typeof error.response.data.message === 'string') return error.response.data.message
+        return error.response.data.message[0]
+    }
+}
+export const updateState = async (id: number) => {
+    try {
+        const { data } = await axios.put(`/tasks/updateState/${id}`);
+        return data
+    } catch (error: string | any) {
+
         if (typeof error.response.data.message === 'string') return error.response.data.message
         return error.response.data.message[0]
     }

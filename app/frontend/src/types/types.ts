@@ -30,3 +30,5 @@ export type Task = {
 export type TaskFormData = Pick<Task, 'title' | 'description'> & {
     state?: React.OptionHTMLAttributes<HTMLOptionElement>['value'];
 };
+
+export type TaskState = Pick<Task, 'state'>['state'];

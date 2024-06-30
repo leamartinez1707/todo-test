@@ -15,7 +15,7 @@ export default function ProtectedRoute() {
                     <div className="w-64 text-white text-center text-2xl font-bold py-2">
                         <img
                             className="text-white"
-                            src='../public/img/logo.svg' alt="Logo in navbar" /> 
+                            src='/assets/logo.svg' alt="Logo in navbar" /> 
                     </div>
                     <NavMenu />
                 </div>

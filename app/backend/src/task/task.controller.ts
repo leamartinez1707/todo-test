@@ -59,6 +59,18 @@ export class TaskController {
             throw new BadRequestException('La tarea no se pudo actualizar')
         }
     }
+    @Put('updateState/:id')
+    @UseGuards(AuthGuard)
+    async updateState(@Param('id') id: string) {
+        try {
+            const updatedTask = await this.taskService.updateState(Number(id))
+            return updatedTask
+        } catch (error) {
+            throw new BadRequestException('La tarea no se pudo actualizar')
+        }
+    }
+
+
     @Delete(':id')
     @UseGuards(AuthGuard)
     async deleteTask(@Param('id') id: string) {

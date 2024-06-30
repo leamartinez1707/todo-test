@@ -44,6 +44,21 @@ export class TaskService {
             data
         });
     }
+    async updateState(id: number): Promise<Task> {
+        const task = await this.prisma.task.findUnique({
+            where: {
+                id
+            }
+        });
+        return this.prisma.task.update({
+            where: {
+                id
+            },
+            data: {
+                state: task.state === 'pendiente' ? 'completada' : 'pendiente'
+            }
+        });
+    }
     async deleteTask(id: number): Promise<Task> {
         return this.prisma.task.delete({
             where: {
