@@ -12,7 +12,11 @@ export default function ProtectedRoute() {
             <header className="bg-gray-800 py-5">
                 <div className="max-w-screen-2xl mx-auto flex flex-col lg:flex-row justify-between items-center">
 
-                    <div className="w-64 text-white text-center text-2xl font-bold py-2">ToDo App Logo</div>
+                    <div className="w-64 text-white text-center text-2xl font-bold py-2">
+                        <img
+                            className="text-white"
+                            src='../public/img/logo.svg' alt="Logo in navbar" /> 
+                    </div>
                     <NavMenu />
                 </div>
 

@@ -2,6 +2,8 @@ import { Link } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import TaskForm from "../Components/Task/TaskForm"
 import type { TaskFormData } from "../types/types"
+import { createTask } from "../api/tasks"
+import { toast } from "react-toastify"
 
 export const TaskPage = () => {
 
@@ -10,11 +12,14 @@ export const TaskPage = () => {
     description: "",
     state: "pendiente"
   }
-  const { register, handleSubmit, formState: { errors } } = useForm({ defaultValues: initialValues })
+  const { register,reset, handleSubmit, formState: { errors } } = useForm({ defaultValues: initialValues })
 
   // Luego pasarle esta funcion al componente para que se ejecute cuando se haga submit
-  const onSubmit = handleSubmit((data: TaskFormData) => {
-    console.log(data)
+  const onSubmit = handleSubmit(async (data: TaskFormData) => {
+    const newTask = await createTask(data)
+    if (!newTask) return toast.error('Error al crear la tarea')
+    toast.success('Tarea creada con exito')
+    reset()
   })
 
   return (
