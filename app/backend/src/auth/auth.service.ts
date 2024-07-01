@@ -30,7 +30,7 @@ export class AuthService {
         const passwordMatch = await bcrypt.compare(password, user.password)
         if (!passwordMatch) throw new UnauthorizedException('La contraseña es incorrecta')
 
-        const payload = { id: user.id, email: user.email }
+        const payload = { id: user.id, email: user.email, name: user.name }
 
         return {
             token: await this.jwtService.signAsync(payload)

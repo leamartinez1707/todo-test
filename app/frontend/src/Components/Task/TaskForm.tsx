@@ -59,11 +59,12 @@ export default function TaskForm({ register, errors }: TaskFormProps) {
         <select
           id="state"
           className="w-full p-3  border border-gray-200"
+          defaultValue={'pendiente'}
           {...register("state", {
             required: "El estado de la tarea es obligatorio",
           })}
         >
-          <option defaultValue={'pendiente'} selected value="pendiente">Pendiente</option>
+          <option value="pendiente">Pendiente</option>
           <option value="completada">Completada</option>
         </select>
       </div>

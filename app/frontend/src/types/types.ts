@@ -6,6 +6,7 @@ export type User = {
     password: string;
     tasks: Task[];
 }
+
 // Create a type for login data
 export type LoginData = Pick<User, 'email' | 'password'>
 
@@ -15,7 +16,7 @@ export type RegisterData = {
     email: string;
     password: string;
 }
-
+export type UserInfo = Pick<User, | 'id' | 'name' | 'email'>;
 
 // Type the Task referenciando a User y su ID
 export type Task = {

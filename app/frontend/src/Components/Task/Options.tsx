@@ -28,7 +28,6 @@ export const Options = ({ task, setTaskUpdated }: OptionsProps) => {
     return (
         <Menu as="div" className="relative flex-none">
             <Menu.Button className="-m-2.5 block p-2.5 text-gray-500 hover:text-gray-900">
-                <span className="sr-only">opciones</span>
                 <EllipsisVerticalIcon className="size-6" aria-hidden="true" />
             </Menu.Button>
             <Transition as={Fragment} enter="transition ease-out duration-100"
@@ -50,7 +49,7 @@ export const Options = ({ task, setTaskUpdated }: OptionsProps) => {
                         </button>
                     </Menu.Item>
                     <Menu.Item>
-                        <Link to={``}
+                        <Link to={`/task/update/${task.id}`}
                             className='flex px-3 py-1 text-sm leading-6 text-gray-900 duration-300 transition-colors hover:bg-yellow-200'>
                             Editar
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="ml-1 size-4">

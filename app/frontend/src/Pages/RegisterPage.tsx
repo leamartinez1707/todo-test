@@ -1,10 +1,11 @@
 import { ErrorMessage } from "../Components/ErrorMessage"
 import { useForm } from "react-hook-form";
 import type { RegisterData } from "../types/types";
-import { registerRequest } from "../api/auth";
+// import { registerRequest } from "../api/auth";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useAuth } from "../hooks/useAuth";
 
 
 export const RegisterPage = () => {
@@ -16,9 +17,12 @@ export const RegisterPage = () => {
   }
   const { handleSubmit, register, formState: { errors } } = useForm({ defaultValues: initialValues })
   const navigate = useNavigate()
+  const { signup } = useAuth()
+
 
   const onSubmit = handleSubmit(async (data: RegisterData) => {
-    await registerRequest(data)
+    const sign = await signup(data)
+    console.log(sign)
     toast(`Usuario creado correctamente`)
     navigate("/login")
   })

@@ -4,18 +4,17 @@ import { ToastContainer } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css'
 
 
-
 export default function ProtectedRoute() {
 
     return (
         <>
-            <header className="bg-gray-800 py-5">
+            <header className="bg-gray-800 py-5 p-6">
                 <div className="max-w-screen-2xl mx-auto flex flex-col lg:flex-row justify-between items-center">
 
                     <div className="w-64 text-white text-center text-2xl font-bold py-2">
                         <img
                             className="text-white"
-                            src='/assets/logo.svg' alt="Logo in navbar" /> 
+                            src='/assets/logo.svg' alt="Logo in navbar" />
                     </div>
                     <NavMenu />
                 </div>
@@ -27,7 +26,7 @@ export default function ProtectedRoute() {
 
             <footer className="py-5 bottom-0 w-full">
                 <p className="bg-gray-800 text-white text-center py-5">
-                    Todos los derechos reservados {new Date().getFullYear()}. Leandro Martínez ToDo App
+                    Todos los derechos reservados {new Date().getFullYear()}. Leandro Martínez
                 </p>
             </footer>
             <ToastContainer
