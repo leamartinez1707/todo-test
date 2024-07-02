@@ -1,26 +1,30 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import ProtectedRoute from "../ProtectedRoute";
+import AppLayout from "../AppLayout";
 import { HomePage } from "../Pages/HomePage";
 import { LoginPage } from "../Pages/LoginPage";
 import { RegisterPage } from "../Pages/RegisterPage";
 import { TaskPage } from "../Pages/TaskPage";
 import { ProfilePage } from "../Pages/ProfilePage";
+import { ProtectedRoutes } from "../ProtectedRoutes";
 
 export default function Router() {
 
     return (
         <BrowserRouter>
             <Routes>
-                {/* Rutas protegidas por Protected Route */}
-                <Route element={<ProtectedRoute />}>
-                    <Route path="/profile" element={<ProfilePage />} />
+                {/* Rutas encapsuladas por App Layout */}
+                <Route element={<AppLayout />}>
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/register" element={<RegisterPage />} />
-                    <Route path="/tasks" element={<HomePage />} />
-                    <Route path="/task/create" element={<TaskPage />} />
-                    <Route path="/task/update/:id" element={<TaskPage />} />
+
+                    <Route element={<ProtectedRoutes />}>
+                        <Route path="/profile" element={<ProfilePage />} />
+                        <Route path="/tasks" element={<HomePage />} />
+                        <Route path="/task/update/:id" element={<TaskPage />} />
+                        <Route path="/task/create" element={<TaskPage />} />
+                        <Route path="*" element={'No existe la página'} />
+                    </Route>
                 </Route>
-                <Route path="*" element={'No existe la página'} />
             </Routes>
         </BrowserRouter>
     )

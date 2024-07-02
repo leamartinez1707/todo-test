@@ -1,14 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { createContext, useState } from 'react'
-import { registerRequest } from '../api/auth.js'
+import { createContext, useEffect, useState } from 'react'
+import { getProfile, loginRequest, logoutRequest, registerRequest } from '../api/auth.js'
 import { LoginData, RegisterData, UserInfo } from '../types/types.js'
 // import Cookies from 'js-cookie'
 
 
 
 type AuthContextProps = {
-    signup: (user: RegisterData) => Promise<any>
-    user: UserInfo | undefined
+    signup: (user: RegisterData) => Promise<void>
+    signin: (user: LoginData) => Promise<void>
+    logout: () => Promise<void>
+    user: UserInfo | null
     isAuthenticated: boolean
 }
 
@@ -22,106 +24,97 @@ export const AuthContext = createContext<AuthContextProps>(null!)
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
 
-    const [user, setUser] = useState<UserInfo>()
+    const [user, setUser] = useState<UserInfo | null>(null)
     const [isAuthenticated, setIsAuthenticated] = useState(false)
     // const [errors, setErrors] = useState([])
     // const [loading, setLoading] = useState(true)
-
 
     // Funcion para realizar el registro mediante los datos obtenidos en el body del formulario
     const signup = async (values: RegisterData) => {
         try {
             const { data } = await registerRequest(values)
-            setUser(data)
+            console.log(data)
             return data
-        } catch (error: string | any) {
+        } catch (error: any) {
+            setIsAuthenticated(false)
             if (typeof error.response.data.message === 'string') return error.response.data.message
             return error.response.data.message[0]
         }
     }
-    // Funcion para realizar el login mediante los datos obtenidos en el body del formulario
-    // const signin = async (user) => {
-    //     try {
-    //         setLoading(true)
-    //         const res = await loginRequest(user)
-    //         Cookies.set("access_token", res.data.token, { expires: 3 })
-    //         const { access_token } = Cookies.get();
-    //         const auth = await verifyTokenRequest(access_token);
-    //         if (!auth) {
-    //             setUser(null)
-    //             setIsAuthenticated(false)
-    //             setErrors(['No se pudo verificar el token'])
-    //             return;
-    //         }
-    //         setUser(res.data)
-    //         setIsAuthenticated(true)
-    //     } catch (error) {
-    //         if (!error.response.data.message) return setErrors([error.message])
-    //         setErrors(error.response.data.message)
-    //     } finally {
-    //         setLoading(false);
-    //     }
-    // }
+    //Funcion para realizar el login mediante los datos obtenidos en el body del formulario
+    const signin = async (user: LoginData) => {
+        try {
+            const { data } = await loginRequest(user)
+            localStorage.setItem('token', data.token)
+            const profile = await getProfile()
+            console.log(profile)
+            if (!profile) {
+                setUser(null)
+                setIsAuthenticated(false)
+                return;
+            }
+            setUser(profile)
+            setIsAuthenticated(true)
+            return data
+        } catch (error: any) {
+            if (typeof error.response.data.message === 'string') return error.response.data.message
+            setUser(null)
+            setIsAuthenticated(false)
+            return error.response.data.message[0]
+            // } finally {
+            //     setLoading(false);
+            // }
+        }
+    }
 
-    // const logout = async () => {
-    //     try {
-    //         await logoutRequest()
-    //         Cookies.remove()
-    //         Cookies.remove("access_token")
-    //         setUser(null)
-    //         setIsAuthenticated(false)
-    //     } catch (error) {
-    //         if (!error.response.data.message) return setErrors([error.message])
-    //         setErrors(error.response.data.message)
-    //     }
-    // }
+    const logout = async () => {
+        try {
+            await logoutRequest()
+            localStorage.removeItem('token')
+            setUser(null)
+            setIsAuthenticated(false)
+            return ('Sesión cerrada correctamente')
+        } catch (error: any) {
+            if (typeof error.response.data.message === 'string') return error.response.data.message
+            return error.response.data.message[0]
+        }
+    }
 
-    // // Elimina los errores del formulario luego de 5 segundos.
-    // useEffect(() => {
-    //     if (errors.length > 0) {
-    //         const timer = setTimeout(() => {
-    //             setErrors([])
-    //         }, 5000);
-    //         return () => clearTimeout(timer)
-    //     }
-    // }, [errors])
-
-
-    // useEffect(() => {
-    //     const checkLogin = async () => {
-    //         // Setea la cookie recibida por el navegador si es que existe una guardada
-    //         const cookie = Cookies.get()
-    //         // Si el usuario no existe y no se generá un token, no lo dejamos ingresar a la página.
-    //         // utilizar cookie.access_token
-    //         if (!cookie.access_token) {
-    //             setIsAuthenticated(false)
-    //             setLoading(false)
-    //             setUser(null)
-    //             return;
-    //         }
-    //         try {
-    //             // Si existe un token guardado en el navegador, se envia al backend y este verifica si es correcto
-    //             const { data } = await verifyTokenRequest(cookie.access_token)
-    //             if (!data) return setIsAuthenticated(false)
-    //             // El usuario existe y el token no dió problema
-    //             setIsAuthenticated(true)
-    //             setUser(data)
-    //             setLoading(false)
-
-    //         } catch (error) {
-    //             setIsAuthenticated(false)
-    //             setLoading(false)
-    //             setUser(null)
-    //         }
-    //     };
-    //     // Ejecutamos la función
-    //     checkLogin()
-    // }, [])
+    useEffect(() => {
+        const checkLogin = async () => {
+            // Setea la cookie recibida por el navegador si es que existe una guardada
+            const cookie = localStorage.getItem('token')
+            // Si el usuario no existe y no se generá un token, no lo dejamos ingresar a la página.
+            // utilizar cookie.access_token
+            if (!cookie) {
+                setIsAuthenticated(false)
+                setUser(null)
+                return;
+            }
+            try {
+                // Si existe un token guardado en el navegador, se envia al backend y este verifica si es correcto
+                const userFound = await getProfile()
+                if (!userFound) return setIsAuthenticated(false)
+                // El usuario existe y el token no dió problema
+                setIsAuthenticated(true)
+                setUser(userFound)
+                console.log('usuario encontrado')
+            } catch (error) {
+                setIsAuthenticated(false)
+                setUser(null)
+            }
+        };
+        // Ejecutamos la función
+        checkLogin()
+        checkLogin()
+    }, [])
 
 
     return (
         <AuthContext.Provider value={{
             signup,
+            signin,
+            logout,
             user,
             isAuthenticated
         }}>

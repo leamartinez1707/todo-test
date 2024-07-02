@@ -4,7 +4,8 @@ import { ToastContainer } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css'
 
 
-export default function ProtectedRoute() {
+export default function AppLayout() {
+
 
     return (
         <>

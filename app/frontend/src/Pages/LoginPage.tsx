@@ -1,10 +1,10 @@
 import { ErrorMessage } from "../Components/ErrorMessage"
 import { useForm } from "react-hook-form";
 import type { LoginData } from "../types/types";
-import { loginRequest } from "../api/auth";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useAuth } from "../hooks/useAuth";
 
 
 export const LoginPage = () => {
@@ -14,15 +14,15 @@ export const LoginPage = () => {
         password: ""
     }
     const { handleSubmit, register, formState: { errors } } = useForm({ defaultValues: initialValues })
-    const naviagate = useNavigate()
+    const { signin } = useAuth()
+    const navigate = useNavigate()
 
     const onSubmit = handleSubmit(async (data: LoginData) => {
         // Corrobora que el usuario exista en la base de datos
-        const user = await loginRequest(data)
-        console.log(user)
-        if (!user) return toast.warning('No se pudo iniciar sesión')
+        const user = await signin(data)
+        if (typeof user === 'string' || typeof user === "undefined") return toast.warning(user)
         toast('Sesión iniciada correctamente')
-        naviagate("/tasks")
+        navigate("/tasks")
     })
 
     return (

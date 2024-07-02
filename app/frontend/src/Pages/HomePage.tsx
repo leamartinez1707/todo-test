@@ -27,36 +27,37 @@ export const HomePage = () => {
         <Link to="/task/create" className="bg-red-300 hover:bg-red-500 px-10 py-2 rounded-sm text-white text-xl font-bold cursor-pointer transition-colors">Nueva tarea</Link>
       </nav>
 
-      {tasks.length < 1 ? <p className="text-2xl font-light text-gray-500 mt-5">No hay tareas</p> :
-        <ul className="shadow-lg border-lg bg-transparent">
-          {tasks
-            .filter((task) => task.state === 'pendiente')
-            .map((task: Task) => (
-              <li key={task.id} className="my-2 hover:cursor-pointer">
-                <div className="w-full rounded-md p-2 bg-gray-100">
-                  <div className="flex justify-between">
-                    <div className="flex py-1 h-full items-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="red" className="size-6">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                      </svg>
-                      <h3 className="font-black uppercase mx-2">{task.title} </h3>
-                    </div>
-                    <div className="flex shrink-0 items-center gap-x-6">
-                      <Options
-                        task={task}
-                        setTaskUpdated={setTaskUpdated}
-                      />
-                    </div>
-                  </div>
+      {tasks.length < 1 && <p className="text-2xl font-light text-gray-500 mt-5">No hay tareas</p>}
 
-                  <p className='text-wrap text-md font-medium text-left'>{task.description}</p>
-                  <p className="text-sm">Vence el día {new Date(task.expirateDate).getDate()} a las {new Date(task.expirateDate).toLocaleTimeString()}</p>
+      <ul className="shadow-lg border-lg bg-transparent">
+        {tasks
+          .filter((task) => { return task.state === 'pendiente' })
+          .map((task: Task) => (
+            <li key={task.id} className="my-2 hover:cursor-pointer">
+              <div className="w-full rounded-md p-2 bg-gray-100">
+                <div className="flex justify-between">
+                  <div className="flex py-1 h-full items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="red" className="size-6">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                    <h3 className="font-black uppercase mx-2">{task.title} </h3>
+                  </div>
+                  <div className="flex shrink-0 items-center gap-x-6">
+                    <Options
+                      task={task}
+                      setTaskUpdated={setTaskUpdated}
+                    />
+                  </div>
                 </div>
-              </li>
-            ))
-          }
-        </ul>
-      }
+
+                <p className='text-wrap text-md font-medium text-left'>{task.description}</p>
+                <p className="text-sm">Vence el día {new Date(task.expirateDate).getDate()} a las {new Date(task.expirateDate).toLocaleTimeString()}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+
       <button
         onClick={() => setDropdown(!dropdown)}
         className="flex items-center justify-between bg-blue-400 hover:bg-blue-500 px-10 py-2 rounded-sm text-white text-xl font-bold cursor-pointer duration-500 transition-colors w-full mt-4"

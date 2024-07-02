@@ -21,8 +21,8 @@ export const RegisterPage = () => {
 
 
   const onSubmit = handleSubmit(async (data: RegisterData) => {
-    const sign = await signup(data)
-    console.log(sign)
+    const userData = await signup(data)
+    if (typeof userData === 'string') return toast.error(userData)
     toast(`Usuario creado correctamente`)
     navigate("/login")
   })
