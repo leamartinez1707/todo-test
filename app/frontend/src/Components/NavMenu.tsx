@@ -47,7 +47,6 @@ export default function NavMenu() {
                             onClick={async () => {
                                 logout()
                                 toast.success('Sesión cerrada') 
-
                             }}
                         >
                             Cerrar sesión

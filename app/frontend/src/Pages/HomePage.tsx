@@ -1,22 +1,19 @@
 import { Link } from "react-router-dom"
 import { useState, useEffect } from "react"
-import { getTasks } from "../api/tasks"
 import { Task } from "../types/types"
 import { Options } from "../Components/Task/Options"
+import { useTasks } from "../hooks/useTasks"
 
 export const HomePage = () => {
 
-  const [tasks, setTasks] = useState<Task[]>([])
+  // const [tasks, setTasks] = useState<Task[]>([])
   const [dropdown, setDropdown] = useState(false)
   const [taskUpdated, setTaskUpdated] = useState(false)
+  const { tasks, getTasks } = useTasks()
 
 
   useEffect(() => {
-    const fetchTasks = async () => {
-      const data = await getTasks()
-      setTasks(data)
-    }
-    fetchTasks()
+    getTasks()
   }, [taskUpdated])
 
   return (

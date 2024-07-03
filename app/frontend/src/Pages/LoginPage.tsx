@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAuth } from "../hooks/useAuth";
+import { useEffect } from "react";
 
 
 export const LoginPage = () => {
@@ -14,7 +15,7 @@ export const LoginPage = () => {
         password: ""
     }
     const { handleSubmit, register, formState: { errors } } = useForm({ defaultValues: initialValues })
-    const { signin } = useAuth()
+    const { signin, isAuthenticated } = useAuth()
     const navigate = useNavigate()
 
     const onSubmit = handleSubmit(async (data: LoginData) => {
@@ -24,6 +25,14 @@ export const LoginPage = () => {
         toast('Sesión iniciada correctamente')
         navigate("/tasks")
     })
+
+
+    useEffect(() => {
+
+        if (isAuthenticated) {
+            return navigate("/tasks")
+        }
+    }, [isAuthenticated])
 
     return (
         <form onSubmit={onSubmit} className="p-4 rounded-md shadow-md max-w-3xl mx-auto">

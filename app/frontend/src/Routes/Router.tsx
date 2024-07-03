@@ -6,6 +6,7 @@ import { RegisterPage } from "../Pages/RegisterPage";
 import { TaskPage } from "../Pages/TaskPage";
 import { ProfilePage } from "../Pages/ProfilePage";
 import { ProtectedRoutes } from "../ProtectedRoutes";
+import { NotFound404 } from "../Pages/NotFound404";
 
 export default function Router() {
 
@@ -22,8 +23,8 @@ export default function Router() {
                         <Route path="/tasks" element={<HomePage />} />
                         <Route path="/task/update/:id" element={<TaskPage />} />
                         <Route path="/task/create" element={<TaskPage />} />
-                        <Route path="*" element={'No existe la página'} />
                     </Route>
+                    <Route path="*" element={<NotFound404 />} />
                 </Route>
             </Routes>
         </BrowserRouter>

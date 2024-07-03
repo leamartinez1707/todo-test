@@ -2,9 +2,9 @@ import { useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { useParams, useNavigate, Link } from "react-router-dom"
 import { toast } from "react-toastify"
-import type { TaskFormData } from "../types/types"
-import { createTask, getTaskById, updateTask, deleteTask } from "../api/tasks"
 import TaskForm from "../Components/Task/TaskForm"
+import { useTasks } from "../hooks/useTasks"
+import type { TaskFormData } from "../types/types"
 
 export const TaskPage = () => {
 
@@ -14,23 +14,23 @@ export const TaskPage = () => {
     state: "pendiente"
   }
   const { register, reset, handleSubmit, formState: { errors }, setValue } = useForm({ defaultValues: initialValues })
+  const { createTask, getTaskById, updateTask, deleteTask } = useTasks()
   const params = useParams()
   const navigate = useNavigate()
 
   // Luego pasarle esta funcion al componente para que se ejecute cuando se haga submit
   const onSubmit = handleSubmit(async (data: TaskFormData) => {
-
     try {
       if (params.id) {
         const updatedTask = await updateTask(+params.id, data)
-        if (!updatedTask.title) return toast.error('Error al modificar la tarea')
+        if (!updatedTask) return toast.error('Error al modificar la tarea')
         toast.success('Tarea modificada con exito')
         navigate('/tasks')
 
       }
       else {
         const newTask = await createTask(data)
-        if (!newTask.id) return toast.error('Error al crear la tarea')
+        if (!newTask) return toast.error('Error al crear la tarea')
         toast.success('Tarea creada con exito')
         reset()
       }
@@ -42,7 +42,7 @@ export const TaskPage = () => {
   })
   const deleteTaskById = async () => {
     if (params.id) {
-      const deleted = await deleteTask(+params.id)
+      const deleted = deleteTask(+params.id)
       if (!deleted) return toast.error('Error al eliminar la tarea')
     } else {
       return toast.error('Error al eliminar la tarea')
@@ -57,14 +57,15 @@ export const TaskPage = () => {
     const loadTask = async () => {
       if (params.id) {
         const task = await getTaskById(+params.id)
-        if (typeof task === 'string') {
+        if (!task) {
           toast.warning('Tarea no encontrada')
-          return navigate('/task/create')
+          setTimeout(() => navigate('/task/create'), 1000)
         }
         setValue('title', task.title)
         setValue('description', task.description)
         setValue('state', task.state)
       }
+      if (!params.id) reset()
     }
     loadTask()
 

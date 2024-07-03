@@ -1,19 +1,10 @@
-import { useEffect, useState } from "react"
-import { getProfile } from "../api/auth"
-import { User } from "../types/types"
+import { useAuth } from "../hooks/useAuth"
+
 
 
 export const ProfilePage = () => {
-    const [user, setUser] = useState<Pick<User, 'id' | 'email' | 'name'>>()
 
-    useEffect(() => {
-
-        const getUser = async () => {
-            const userFound = await getProfile()
-            setUser(userFound)
-        }
-        getUser()
-    }, [])
+    const { user } = useAuth()
 
     return (
         <div>

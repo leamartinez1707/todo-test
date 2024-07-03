@@ -1,4 +1,5 @@
 import { AuthProvider } from "./Context/AuthContext"
+import { TaskProvider } from "./Context/TaskContext"
 import Router from "./Routes/Router"
 
 
@@ -6,7 +7,9 @@ function App() {
   return (
     <>
       <AuthProvider>
-        <Router />
+        <TaskProvider>
+          <Router />
+        </TaskProvider>
       </AuthProvider>
     </>
   )

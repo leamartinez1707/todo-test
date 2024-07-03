@@ -33,7 +33,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     const signup = async (values: RegisterData) => {
         try {
             const { data } = await registerRequest(values)
-            console.log(data)
             return data
         } catch (error: any) {
             setIsAuthenticated(false)
@@ -47,7 +46,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
             const { data } = await loginRequest(user)
             localStorage.setItem('token', data.token)
             const profile = await getProfile()
-            console.log(profile)
             if (!profile) {
                 setUser(null)
                 setIsAuthenticated(false)
@@ -95,17 +93,15 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
                 // Si existe un token guardado en el navegador, se envia al backend y este verifica si es correcto
                 const userFound = await getProfile()
                 if (!userFound) return setIsAuthenticated(false)
-                // El usuario existe y el token no dió problema
+                // El usuario existe y el token no dió problemas, por lo que se setea el usuario y se le permite el acceso
                 setIsAuthenticated(true)
                 setUser(userFound)
-                console.log('usuario encontrado')
             } catch (error) {
                 setIsAuthenticated(false)
                 setUser(null)
             }
         };
         // Ejecutamos la función
-        checkLogin()
         checkLogin()
     }, [])
 

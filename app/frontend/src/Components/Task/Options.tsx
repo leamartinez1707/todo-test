@@ -3,8 +3,8 @@ import { EllipsisVerticalIcon } from "@heroicons/react/20/solid"
 import { Link } from "react-router-dom"
 import { Fragment } from "react/jsx-runtime"
 import { Task } from "../../types/types"
-import { updateState } from "../../api/tasks"
 import { toast } from "react-toastify"
+import { useTasks } from "../../hooks/useTasks"
 
 
 type OptionsProps = {
@@ -14,14 +14,27 @@ type OptionsProps = {
 
 export const Options = ({ task, setTaskUpdated }: OptionsProps) => {
 
-    const handleComplete = async (id: number) => {
-        const response = await updateState(id);
+    const { updateTaskStatus, deleteTask } = useTasks()
+
+    const handleComplete = (id: Task['id']) => {
+        const response = updateTaskStatus(id);
         if (typeof response === 'string') return toast.error('No se pudo actualizar la tarea')
         toast.success('Tarea actualizada')
         setTaskUpdated(true)
         setTimeout(() => {
             setTaskUpdated(false)
         }, 500);
+    }
+
+    const handleDeleted = async (id: Task['id']) => {
+        const response = await deleteTask(id);
+        if (typeof response === 'string') return toast.error('No se pudo eliminar la tarea')
+        toast.success('Tarea eliminada')
+        setTaskUpdated(true)
+        setTimeout(() => {
+            setTaskUpdated(false)
+        }, 500);
+
     }
 
 
@@ -62,7 +75,7 @@ export const Options = ({ task, setTaskUpdated }: OptionsProps) => {
                         <button
                             type='button'
                             className='flex w-full px-3 py-1 text-sm leading-6  duration-300 transition-colors hover:bg-red-200'
-                            onClick={() => { }}
+                            onClick={() => handleDeleted(task.id)}
                         >
                             Eliminar
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="ml-1 size-4 text-red-500">

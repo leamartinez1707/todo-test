@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAuth } from "../hooks/useAuth";
+import { useEffect } from "react";
 
 
 export const RegisterPage = () => {
@@ -17,7 +18,7 @@ export const RegisterPage = () => {
   }
   const { handleSubmit, register, formState: { errors } } = useForm({ defaultValues: initialValues })
   const navigate = useNavigate()
-  const { signup } = useAuth()
+  const { signup, isAuthenticated } = useAuth()
 
 
   const onSubmit = handleSubmit(async (data: RegisterData) => {
@@ -26,6 +27,13 @@ export const RegisterPage = () => {
     toast(`Usuario creado correctamente`)
     navigate("/login")
   })
+
+  useEffect(() => {
+
+    if (isAuthenticated) {
+      return navigate("/tasks")
+    }
+  }, [isAuthenticated])
 
   return (
     <form onSubmit={onSubmit} className="shadow-lg rounded-lg p-4 max-w-3xl mx-auto">
