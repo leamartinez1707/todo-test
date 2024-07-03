@@ -36,7 +36,7 @@ export const RegisterPage = () => {
   }, [isAuthenticated])
 
   return (
-    <form onSubmit={onSubmit} className="shadow-lg rounded-lg p-4 max-w-3xl mx-auto">
+    <form onSubmit={onSubmit} className="shadow-lg rounded-lg p-4 max-w-3xl mx-auto ">
       <h1 className="text-3xl font-black my-2">Registro</h1>
       <div className="mb-5 space-y-3">
         <label htmlFor="name" className="text-sm uppercase font-bold">

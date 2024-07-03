@@ -20,6 +20,7 @@ export default function Router() {
 
                     <Route element={<ProtectedRoutes />}>
                         <Route path="/profile" element={<ProfilePage />} />
+                        <Route path="/" element={<HomePage />} />
                         <Route path="/tasks" element={<HomePage />} />
                         <Route path="/task/update/:id" element={<TaskPage />} />
                         <Route path="/task/create" element={<TaskPage />} />
