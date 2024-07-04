@@ -23,11 +23,12 @@ export default function TaskForm({ register, errors }: TaskFormProps) {
           id="title"
           className="w-full p-2 border border-gray-200"
           type="text"
-          placeholder="Máx. 50 carácteres"
+          placeholder="Máx. 25 carácteres"
+          autoFocus
           {...register("title", {
             maxLength: {
-              value: 30,
-              message: "El título de la tarea no puede tener más de 50 caracteres",
+              value: 20,
+              message: "El título de la tarea no puede tener más de 20 caracteres",
             },
             required: "El título de la tarea es obligatorio",
           })}
@@ -48,6 +49,10 @@ export default function TaskForm({ register, errors }: TaskFormProps) {
           type="text"
           placeholder="Ej: Enviar el reporte de ventas al director de ventas"
           {...register("description", {
+            maxLength: {
+              value: 35,
+              message: "La descripción de la tarea no puede tener más de 35 caracteres",
+            },
             required: "La descripión es obligatoria",
           })}
         />

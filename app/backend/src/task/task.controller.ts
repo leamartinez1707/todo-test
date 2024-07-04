@@ -15,6 +15,7 @@ export class TaskController {
         @Request() req,
     ) {
         try {
+            await this.taskService.deleteExpiratedTasks()
             return await this.taskService.getAllTasks(req.user.id)
         } catch (error) {
             throw new BadRequestException('Error al buscar las tareas')

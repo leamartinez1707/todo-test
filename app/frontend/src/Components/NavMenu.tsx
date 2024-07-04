@@ -42,7 +42,7 @@ export default function NavMenu() {
                             className='block p-2 hover:text-purple-950'
                         >Mis tareas</Link>
                         <button
-                            className='block p-2 hover:text-red-300 '
+                            className='block p-2 hover:text-red-500 '
                             type='button'
                             onClick={async () => {
                                 logout()

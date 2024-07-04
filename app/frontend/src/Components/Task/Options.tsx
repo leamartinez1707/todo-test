@@ -9,14 +9,13 @@ import { useTasks } from "../../hooks/useTasks"
 
 type OptionsProps = {
     task: Task
-    setTaskUpdated: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export const Options = ({ task, setTaskUpdated }: OptionsProps) => {
+export const Options = ({ task }: OptionsProps) => {
 
-    const { updateTaskStatus, deleteTask } = useTasks()
+    const { updateTaskStatus, deleteTask, setTaskUpdated } = useTasks()
 
-    const handleComplete = (id: Task['id']) => {
+    const handleUpdateStatus = (id: Task['id']) => {
         const response = updateTaskStatus(id);
         if (typeof response === 'string') return toast.error('No se pudo actualizar la tarea')
         toast.success('Tarea actualizada')
@@ -51,7 +50,7 @@ export const Options = ({ task, setTaskUpdated }: OptionsProps) => {
                     className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none"
                 >
                     <Menu.Item>
-                        <button onClick={() => handleComplete(task.id)}
+                        <button onClick={() => handleUpdateStatus(task.id)}
                             className='flex w-full px-3 py-1 text-sm leading-6 text-gray-900 duration-300 transition-colors hover:bg-green-200'>
                             {task.state === 'completada' ? 'Volver a pendientes' : 'Completada'}
                             <svg

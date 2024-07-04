@@ -1,4 +1,4 @@
-// Create a type for user data
+// Type con la informacion del usuario
 export type User = {
     id: number;
     name: string,
@@ -6,19 +6,19 @@ export type User = {
     password: string;
     tasks: Task[];
 }
+// Type para la informacion mostrada del usuario
+export type UserInfo = Pick<User, | 'id' | 'name' | 'email'>;
 
-// Create a type for login data
+// Type para el login de usuarios
 export type LoginData = Pick<User, 'email' | 'password'>
 
-// Create a type for register data
+// Type para el registro de usuarios
 export type RegisterData = {
     name: string;
     email: string;
     password: string;
 }
-export type UserInfo = Pick<User, | 'id' | 'name' | 'email'>;
-
-// Type the Task referenciando a User y su ID
+// Type de las tareas que se van a mostrar
 export type Task = {
     id: number;
     title: string;
@@ -28,8 +28,10 @@ export type Task = {
     userId: User['id']
 }
 
+// Type para el formulario de tareas
 export type TaskFormData = Pick<Task, 'title' | 'description'> & {
     state?: React.OptionHTMLAttributes<HTMLOptionElement>['value'];
 };
 
+// Type para actualizar el estado de las tareas
 export type TaskState = Pick<Task, 'state'>['state'];

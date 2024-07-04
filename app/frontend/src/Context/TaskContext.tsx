@@ -1,4 +1,4 @@
-import React, { createContext, useEffect } from "react";
+import { Dispatch, ReactNode, createContext, useEffect, useState } from "react";
 import { Task, TaskFormData } from "../types/types";
 import { createTaskRequest, deleteTaskRequest, getTaskByIdRequest, getTasksRequest, updateTaskRequest, updateTaskStateRequest } from "../api/tasks";
 
@@ -12,9 +12,11 @@ type TaskContextProps = {
     deleteTask: (id: Task['id']) => Promise<Task>
     updateTask: (id: Task['id'], task: TaskFormData) => Promise<Task>
     updateTaskStatus: (id: Task['id']) => Promise<Task>
+    taskUpdated: boolean
+    setTaskUpdated: Dispatch<React.SetStateAction<boolean>>
 }
 type TaskProviderProps = {
-    children: React.ReactNode
+    children: ReactNode
 }
 
 export const TaskContext = createContext<TaskContextProps>(null!);
@@ -22,8 +24,9 @@ export const TaskContext = createContext<TaskContextProps>(null!);
 
 export const TaskProvider = ({ children }: TaskProviderProps) => {
 
-    const [tasks, setTasks] = React.useState<Task[]>([])
-    const [task, setTask] = React.useState<Task>(null!)
+    const [tasks, setTasks] = useState<Task[]>([])
+    const [task, setTask] = useState<Task>(null!)
+    const [taskUpdated, setTaskUpdated] = useState(false)
 
     const getTasks = async () => {
         try {
@@ -103,7 +106,9 @@ export const TaskProvider = ({ children }: TaskProviderProps) => {
             createTask,
             deleteTask,
             updateTask,
-            updateTaskStatus
+            updateTaskStatus,
+            taskUpdated,
+            setTaskUpdated
         }}>
 
             {children}

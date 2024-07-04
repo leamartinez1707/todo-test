@@ -12,6 +12,7 @@ export default function AppLayout() {
     return (
         <>
             <header className="bg-gray-800 py-5 p-6">
+
                 <div className="max-w-screen-2xl mx-auto flex flex-col lg:flex-row justify-between items-center">
 
                     <div
@@ -27,14 +28,19 @@ export default function AppLayout() {
             </header>
             <section className="
             
-            max-w-screen-2xl mx-auto mt-10 p-5 min-h-screen">
+            max-w-screen-2xl mx-auto mt-10 p-1 sm:p-5 min-h-screen">
                 <Outlet />
             </section>
 
-            <footer className="py-5 bottom-0 w-full">
-                <p className="bg-gray-800 text-white text-center py-5">
-                    Todos los derechos reservados {new Date().getFullYear()}. Leandro Martínez
-                </p>
+            <footer className="w-full bg-gray-800 text-white text-center">
+                <div className="bg-gray-800 text-white text-center p-4 sm:p-5">
+                    <p>Contacto: leandromartinez.dev@gmail.com</p>
+                    <p className="">
+                        Todos los derechos reservados {new Date().getFullYear()}. Leandro Martínez
+                    </p>
+                </div>
+
+
             </footer>
             <ToastContainer
                 pauseOnHover={false}

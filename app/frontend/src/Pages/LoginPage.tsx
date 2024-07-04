@@ -64,6 +64,7 @@ export const LoginPage = () => {
                     id="password"
                     className="w-full p-3  border border-gray-200"
                     type="password"
+
                     placeholder="Contraseña"
                     {...register("password", {
                         required: "La contraseña es obligatoria",

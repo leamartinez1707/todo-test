@@ -24,7 +24,7 @@ export class TaskService {
     async getAllTasks(id: number): Promise<Task[]> {
         const tasks = this.prisma.task.findMany({
             where: {
-                userId: id
+                userId: id,
             }
         });
         return tasks;
@@ -63,6 +63,19 @@ export class TaskService {
         return this.prisma.task.delete({
             where: {
                 id
+            }
+        });
+    }
+
+    async deleteExpiratedTasks(): Promise<void> {
+        const hoy = new Date();
+        console.log(hoy)
+        // Borrar las tareas que tengan una fecha de expiración menor a la fecha actual
+        await this.prisma.task.deleteMany({
+            where: {
+                expirateDate: {
+                    lt: hoy
+                }
             }
         });
     }

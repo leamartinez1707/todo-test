@@ -30,12 +30,14 @@ Antes que nada, debemos ir a la ruta de nuestro proyecto:
     En las secciones con {}, debemos poner el usuario y contraseña de nuestro MySql.
     (Las {} no van, solo texto)
 
-    Una vez creada estas variables ejecutamos el siguiente comando en consola
+    Una vez creada estas variables ejecutamos el siguiente comando en consola:
+
     ```bash
       npx prisma migrate dev --name init        // Para crear el schema en nuestra base
       cd ..
       cd ..
     ```
+    
     Con cd .. (2 veces) volvemos a la carpeta raíz del proyecto.
 
 En la carpeta raíz del proyecto, abrir la terminal de Visual Studio Code y ejecutar los siguientes comandos: 
