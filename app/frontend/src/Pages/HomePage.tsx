@@ -48,7 +48,7 @@ export const HomePage = () => {
                 </div>
 
                 <p className='text-wrap text-md font-medium text-left'>{task.description}</p>
-                <p className="text-sm">Vence el día {new Date(task.expirateDate).getDate()} a las {new Date(task.expirateDate).toLocaleTimeString()}</p>
+                <p className="text-sm">Vence el {new Date(task.expirateDate).getDate()}/{new Date(task.expirateDate).getMonth()} a las {new Date(task.expirateDate).toLocaleTimeString()}</p>
               </div>
             </li>
           ))
@@ -92,7 +92,7 @@ export const HomePage = () => {
                     </div>
 
                     <p className='text-wrap text-md font-medium text-left'>{task.description}</p>
-                    <p className="text-sm">Vence el día {new Date(task.expirateDate).getDate()} a las {new Date(task.expirateDate).toLocaleTimeString()}</p>
+                    <p className="text-sm">Vence el día {new Date(task.expirateDate).getDate()} de {new Date(task.expirateDate).getDate()} a las {new Date(task.expirateDate).toLocaleTimeString()}</p>
                   </div>
                 </li>
               ))
