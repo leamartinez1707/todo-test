@@ -16,8 +16,27 @@ Frontend: Se utilizó React y Tailwind para crear una interfaz de usuario dinám
 Middleware de Autorización y autenticación: Este servicio verificará las credenciales del usuario (como email y contraseña) y generará un token JWT válido si las credenciales son correctas.
 Se utilizó un middleware de NestJS para validar y decodificar el token JWT enviado en las solicitudes protegidas. Este middleware verificará la validez del token y permitirá o denegará el acceso a recursos protegidos basados en los roles o permisos del usuario.
 
-# Instrucciones para _ejecutar la aplicación_ en cualquier navegador.
+# Instrucciones para _ejecutar la aplicación_.
 
+Antes que nada, debemos ir a la ruta de nuestro proyecto: 
+    app/backend/
+    Acá, vamos a crear un archivo .env donde definiremos nuestras variables de entorno
+    Para poder conectarse a un servidor de MySql, debemos de tenerlo instalado en nuestra computadora
+    Una vez instalado y configurado, y ya con nuestras credenciales para poder crear un servidor
+    En nuestro archivo .env , crearemos dos variables, estas son;
+    DATABASE_URL="mysql://{tunombredeusuario}:{tucontraseña}@localhost:3306/db-todoapp"
+    JWT_SECRET='cualquiertexto'
+
+    En las secciones con {}, debemos poner el usuario y contraseña de nuestro MySql.
+    (Las {} no van, solo texto)
+
+    Una vez creada estas variables ejecutamos el siguiente comando en consola
+    ```bash
+      npx prisma migrate dev --name init        // Para crear el schema en nuestra base
+      cd ..
+      cd ..
+    ```
+    Con cd .. (2 veces) volvemos a la carpeta raíz del proyecto.
 
 En la carpeta raíz del proyecto, abrir la terminal de Visual Studio Code y ejecutar los siguientes comandos: 
 ```bash
