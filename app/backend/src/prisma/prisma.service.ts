@@ -1,14 +1,24 @@
 /* eslint-disable prettier/prettier */
-import { Injectable, OnModuleInit } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { PrismaClient } from "../../node_modules/.prisma/client";
 
 
 @Injectable()
-export class PrismaService extends PrismaClient implements OnModuleInit {
+export class PrismaService extends PrismaClient {
 
-    async onModuleInit() {
-        await this.$connect();
+    constructor() {
+        super({
+            datasources: {
+                db: {
+                    url: process.env.ENVIRONMENT === 'test' ? process.env.DATABASE_URL_TEST : process.env.DATABASE_URL,
+                },
+            },
+        });
     }
+
+    // async onModuleInit() {
+    //     await this.$connect();
+    // }
 
 
 }

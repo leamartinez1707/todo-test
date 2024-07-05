@@ -8,6 +8,7 @@ import { join } from 'path';
 
 @Module({
   imports: [TaskModule, UsersModule, AuthModule,
+    
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '../..', 'frontend', 'dist'),
     })

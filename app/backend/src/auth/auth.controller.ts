@@ -17,7 +17,9 @@ export class AuthController {
         registerDto: RegisterDto
     ) {
         try {
-            return this.authService.register(registerDto)
+            
+            const user = this.authService.register(registerDto)
+            return user
 
         } catch (error) {
             throw new BadRequestException(error.message)

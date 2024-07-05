@@ -50,10 +50,14 @@ export class UsersController {
     }
   }
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() updateUser: User) {
+  async update(@Param('id') id: string, @Body() user: Omit<User, "password">) {
     try {
-      const updatedUser = await this.usersService.updateUser(+id, updateUser);
-      return updatedUser
+      const userUpdated = await this.usersService.updateUser(+id, user);
+      return {
+        id: userUpdated.id,
+        name: userUpdated.name,
+        email: userUpdated.email,
+      }
     } catch (error) {
       throw new BadRequestException('El usuario no se pudo actualizar');
     }
