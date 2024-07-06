@@ -17,6 +17,7 @@ export class TaskService {
         return this.prisma.task.create({
             data: {
                 ...data,
+                state: data.state.toLowerCase(),
                 expirateDate: expiratedAt,
             }
         });

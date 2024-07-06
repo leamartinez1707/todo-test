@@ -18,8 +18,15 @@ Se utilizó un middleware de NestJS para validar y decodificar el token JWT envi
 
 # Instrucciones para _ejecutar la aplicación_.
 
-Antes que nada, debemos ir a la ruta de nuestro proyecto: 
-    app/backend/
+Primero que nada, debemos clonar el proyecto en nuestro IDE (Recomiendo Visual Studio).
+
+    En la ruta raíz, ejecutamos:
+
+    ```bash
+      git clone https://github.com/leamartinez1707/todo-test.git
+    ```
+    
+    cd app/backend
     Acá, vamos a crear un archivo .env donde definiremos nuestras variables de entorno
     Para poder conectarse a un servidor de MySql, debemos de tenerlo instalado en nuestra computadora
     Una vez instalado y configurado, y ya con nuestras credenciales para poder crear un servidor
@@ -58,7 +65,14 @@ En caso de querer correr el proyecto en modo producción, primero debemos instal
 ```
 #### En entorno de producción se debe ingresar a http://localhost:3000/
 
+# Instrucciones para testing _.
 
+En este caso se aplicó en el backend, testeando cada endpoint de la API.
+Para ejecutar los testing aplicados, debejemos ejecutar el comando:
+
+```bash
+  npm run test
+```
     
 ## Soporte
 

@@ -8,7 +8,7 @@ import { Task } from '@prisma/client';
 
 
 
-describe('Tasks (e2e)', () => {
+describe('Testing of Tasks (e2e)', () => {
     let app: INestApplication;
     let token: string;
 
@@ -69,7 +69,7 @@ describe('Tasks (e2e)', () => {
             title: faker.lorem.words(),
             description: faker.lorem.sentence(
             ),
-            state: 'En proceso'
+            state: 'pendiente'
         }
         return request(app.getHttpServer())
             .post('/tasks')
@@ -87,7 +87,7 @@ describe('Tasks (e2e)', () => {
             title: faker.lorem.words(),
             description: faker.lorem.sentence(
             ),
-            state: 'En proceso'
+            state: 'pendiente'
         }
         const response: Task = await request(app.getHttpServer())
             .post('/tasks')
@@ -100,7 +100,7 @@ describe('Tasks (e2e)', () => {
         const editedTask = {
             title: `${response.title} updated`,
             description: `${response.description} updated`,
-            state: 'Completada'
+            state: 'completada'
         }
         return request(app.getHttpServer())
             .put(`/tasks/${response.id}`)
@@ -120,7 +120,7 @@ describe('Tasks (e2e)', () => {
             title: faker.lorem.words(),
             description: faker.lorem.sentence(
             ),
-            state: 'En proceso'
+            state: 'pendiente'
         }
         const response: Task = await request(app.getHttpServer())
             .post('/tasks')
@@ -135,7 +135,7 @@ describe('Tasks (e2e)', () => {
             .then((res) => {
                 expect(res.statusCode).toBe(200)
                 expect(res.body).toHaveProperty('id')
-                expect(res.body.state).toBe(response.state)
+                expect(res.body.state).toBe(response.state.toLowerCase() === 'pendiente' ? 'completada' : 'pendiente')
                 expect(res.body.title).toBe(response.title)
                 expect(res.body.description).toBe(response.description)
             })
@@ -146,7 +146,7 @@ describe('Tasks (e2e)', () => {
             title: faker.lorem.words(),
             description: faker.lorem.sentence(
             ),
-            state: 'En proceso'
+            state: 'pendiente'
         }
         // Primero creamos una tarea para luego eliminarla
         const response: Task = await request(app.getHttpServer())
@@ -161,6 +161,7 @@ describe('Tasks (e2e)', () => {
             .set('Authorization', `Bearer ${token}`)
             .then((res) => {
                 expect(res.statusCode).toBe(200)
+                expect(res.body).toMatchObject(response)
             })
     });
 })

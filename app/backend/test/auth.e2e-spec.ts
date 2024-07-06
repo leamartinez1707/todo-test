@@ -7,7 +7,7 @@ import { faker } from '@faker-js/faker';
 
 
 
-describe('Authentication (e2e)', () => {
+describe('Test of authentication (e2e)', () => {
     let app: INestApplication;
 
     beforeAll(async () => {
@@ -18,6 +18,10 @@ describe('Authentication (e2e)', () => {
         app = moduleFixture.createNestApplication();
         await app.init();
     });
+    afterAll(async () => {
+        app.close();
+    });
+
     it('Should register ', async () => {
         return request(app.getHttpServer())
             .post('/auth/register')
@@ -33,7 +37,6 @@ describe('Authentication (e2e)', () => {
                 expect(res.body).toHaveProperty('id');
             })
 
-
     })
     it('Should log in with credentials and create a token ', async () => {
         return request(app.getHttpServer())
@@ -48,7 +51,5 @@ describe('Authentication (e2e)', () => {
                 expect(res.body.token).toBeDefined()
             })
     })
-    afterAll(async () => {
-        app.close();
-    });
+
 });

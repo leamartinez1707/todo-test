@@ -7,7 +7,7 @@ import { faker } from '@faker-js/faker';
 
 
 
-describe('Users (e2e)', () => {
+describe('Test of users (e2e)', () => {
     let app: INestApplication;
 
     beforeAll(async () => {
@@ -23,8 +23,6 @@ describe('Users (e2e)', () => {
     });
 
     it('Should get all the users', async () => {
-       
-
         return request(app.getHttpServer())
             .get('/users')
             .then((res) => {
