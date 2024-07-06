@@ -43,6 +43,11 @@ export class UsersService {
   }
 
   async updateUser(id: number, data: Omit<User, "password">): Promise<User> {
+
+    if (id !== data.id) {
+      throw new Error('El id del usuario no coincide con el id de los datos enviados');
+    }
+
     return this.prisma.user.update({
       where: {
         id

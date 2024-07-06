@@ -17,7 +17,7 @@ export class AuthController {
         registerDto: RegisterDto
     ) {
         try {
-            
+
             const user = this.authService.register(registerDto)
             return user
 
@@ -29,11 +29,10 @@ export class AuthController {
     @Post('login')
     login(
         @Body()
-        loginDto: LoginDto
+        loginDto: LoginDto,
     ) {
         try {
             return this.authService.login(loginDto)
-
         } catch (error) {
             throw new BadRequestException(error.message)
         }

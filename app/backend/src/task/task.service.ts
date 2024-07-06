@@ -69,7 +69,6 @@ export class TaskService {
 
     async deleteExpiratedTasks(): Promise<void> {
         const hoy = new Date();
-        console.log(hoy)
         // Borrar las tareas que tengan una fecha de expiración menor a la fecha actual
         await this.prisma.task.deleteMany({
             where: {

@@ -31,14 +31,14 @@ export class AuthService {
         if (!passwordMatch) throw new UnauthorizedException('La contraseña es incorrecta')
 
         const payload = { id: user.id, email: user.email, name: user.name }
-
+        const result = await this.jwtService.signAsync(payload)
         return {
-            token: await this.jwtService.signAsync(payload)
+            token: result
         }
     }
 
     //Create a logout method
-    async logout(req) {
+    async logout(req: { user: null; token: null; }) {
         req.user = null
         req.token = null
         return { message: 'Logged out' }

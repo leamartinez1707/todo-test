@@ -7,7 +7,7 @@ import { faker } from '@faker-js/faker';
 
 
 
-describe('UsersController (e2e)', () => {
+describe('Users (e2e)', () => {
     let app: INestApplication;
 
     beforeAll(async () => {
@@ -18,48 +18,68 @@ describe('UsersController (e2e)', () => {
         app = moduleFixture.createNestApplication();
         await app.init();
     });
+    afterAll(async () => {
+        app.close();
+    });
 
     it('Should get all the users', async () => {
-        // // Ya que la ruta está protegida, necesitamos un token para acceder a ella
-        // // Para obtener el token, primero debemos loguearnos
-        // const loginRes = await request(app.getHttpServer())
-        //     .post('/auth/login')
-        //     .send({
-        //         email: 'leandro@gmail.com',
-        //         password: '123456789'
-        //     });
-        // // Se guarda el token en una variable
-        // const cookies = loginRes.body.token
+       
 
         return request(app.getHttpServer())
             .get('/users')
-            // Se envía el token en el header de la petición
-            // .set('Authorization', `Bearer ${cookies}`)
             .then((res) => {
                 expect(res.statusCode).toBe(200)
                 expect(res.body).toBeInstanceOf(Array)
             })
     });
 
+    // Con datos correctos
     it('Should create a User', async () => {
         return request(app.getHttpServer())
             .post('/users')
             .send({
                 name: faker.person.firstName(),
                 email: faker.internet.email(),
-                password: faker.internet.password()
+                password: 'testing'
             })
             .then((res) => {
                 expect(res.statusCode).toEqual(201)
                 expect(res.body).toBeInstanceOf(Object)
+                expect(res.body).toHaveProperty('id');
             })
     })
+    // Con datos incorrectos
+    it('Should not create a User', async () => {
+        const user = {
+            name: faker.person.firstName(),
+            email: 'leandro@hotmail.com',
+        }
+        return request(app.getHttpServer())
+            .post('/users')
+            .send(user)
+            .then((res) => {
+                expect(res.statusCode).toEqual(400)
+                expect(res.body).toBeInstanceOf(Object)
+                expect(res.body).toHaveProperty('message');
+            })
+    })
+    // Con datos correctos
     it('Should get a User by Id', async () => {
         return request(app.getHttpServer())
             .get('/users/2')
             .expect(200)
             .expect({ id: 2, name: 'Nahuel', email: 'testing2@gmail.com' })
     })
+    // Con datos incorrectos
+    it('Should not get the User', async () => {
+        return request(app.getHttpServer())
+            .get('/users/1000')
+            .then((res) => {
+                expect(res.statusCode).toEqual(404)
+            }
+            )
+    })
+    // Con datos correctos
     it('Should update a User by Id', async () => {
         const data = {
             id: 1,
@@ -69,15 +89,31 @@ describe('UsersController (e2e)', () => {
         return request(app.getHttpServer())
             .patch('/users/1')
             .send(data)
-            .expect(200)
-            .expect(data)
+            .then((res) => {
+                expect(res.statusCode).toEqual(200)
+                expect(res.body).toBeInstanceOf(Object)
+                expect(data)
+            })
     })
+    // Con datos incorrectos
+    it('Should not update the user', async () => {
+        const data = {
+            id: 4,
+            name: faker.person.firstName(),
+            email: faker.internet.email(),
+        }
+        return request(app.getHttpServer())
+            .patch('/users/1')
+            .send(data)
+            .then((res) => {
+                expect(res.statusCode).toEqual(400)
+                expect(res.body).toHaveProperty('message')
+            })
+    })
+
     // it('Should delete a User by Id', async () => {
     //     return request(app.getHttpServer())
     //         .delete('/users/5')
     //         .expect(200)
     // })
-    afterAll(async () => {
-        app.close();
-    });
 });
