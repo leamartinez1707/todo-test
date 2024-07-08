@@ -1,9 +1,8 @@
 /* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
-// import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from '../prisma/prisma.service';
-import { User } from "../../node_modules/.prisma/client";
+import { User } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()

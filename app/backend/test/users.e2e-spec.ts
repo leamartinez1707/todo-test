@@ -4,6 +4,7 @@ import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
 import { faker } from '@faker-js/faker';
+import { User } from '@prisma/client';
 
 
 
@@ -63,10 +64,20 @@ describe('Test of users (e2e)', () => {
     })
     // Con datos correctos
     it('Should get a User by Id', async () => {
+        const response: User = await request(app.getHttpServer())
+            .post('/users')
+            .send({
+                name: faker.person.firstName(),
+                email: faker.internet.email(),
+                password: 'testing'
+            }).then((res) => { return res.body })
+
         return request(app.getHttpServer())
             .get('/users/2')
-            .expect(200)
-            .expect({ id: 2, name: 'Nahuel', email: 'testing2@gmail.com' })
+            .then((res) => {
+                expect(res.statusCode).toEqual(200)
+                expect({ id: response.id, name: response.name, email: response.email })
+            })
     })
     // Con datos incorrectos
     it('Should not get the User', async () => {

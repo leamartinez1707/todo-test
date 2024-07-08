@@ -98,7 +98,7 @@ export const RegisterPage = () => {
         value={"Registrarse"}
       />
       <div>
-        <p>Ya tenes usuario? <Link to="/login" className="cursor-pointer font-semibold">Login</Link></p>
+        <p>Ya tenes usuario? <Link to="/login" className="cursor-pointer font-semibold">Ingresar</Link></p>
       </div>
     </form>
   )

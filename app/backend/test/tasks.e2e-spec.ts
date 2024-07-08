@@ -21,13 +21,21 @@ describe('Testing of Tasks (e2e)', () => {
         await app.init();
 
         // Ya que las rutas están protegidas, necesitamos un token para acceder a ellas
-        // Para obtener el token, primero debemos loguearnos
+        // Para obtener el token, primero debemos registrarnos y logearnos
+        const { body } = await request(app.getHttpServer())
+            .post('/auth/register')
+            .send({
+                name: faker.person.firstName(),
+                email: faker.internet.email(),
+                password: 'testing'
+            }).expect(201);
+        // Luego, con los datos del usuario registrado, nos logeamos
         const loginRes = await request(app.getHttpServer())
             .post('/auth/login')
             .send({
-                email: 'Macy_Mitchell39@yahoo.com',
+                email: body.email,
                 password: 'testing'
-            });
+            }).expect(201);
         // Se guarda el token en una variable
         token = loginRes.body.token;
         // Este token es el que va a ser utilizado en cada peticion, con los datos del usuario logueado
@@ -40,6 +48,7 @@ describe('Testing of Tasks (e2e)', () => {
 
 
     it('Should get all the tasks', async () => {
+
         return request(app.getHttpServer())
             .get('/tasks')
             // Se envía el token en el header de la petición
@@ -47,12 +56,26 @@ describe('Testing of Tasks (e2e)', () => {
             .then((res) => {
                 expect(res.statusCode).toBe(200)
                 expect(res.body).toBeInstanceOf(Array)
+                expect(res.body.length).toBeGreaterThanOrEqual(0)
             })
     });
     it('Should get a task by ID', async () => {
-        const id = 5
+        // Primero creamos una tarea para luego pasarle el id a la petición
+        const task = {
+            title: faker.lorem.words(),
+            description: faker.lorem.sentence(
+            ),
+            state: 'pendiente'
+        }
+        // Enviamos la peticion con la tarea creada
+        const { body } = await request(app.getHttpServer())
+            .post('/tasks')
+            .set('Authorization', `Bearer ${token}`)
+            .send(task)
+            .expect(201);
+        // Buscamos la tarea con el id que nos devolvió la creación anterior
         return request(app.getHttpServer())
-            .get(`/tasks/${id}`)
+            .get(`/tasks/${body.id}`)
             .set('Authorization', `Bearer ${token}`)
             .then((res) => {
                 expect(res.statusCode).toBe(200)
@@ -65,6 +88,7 @@ describe('Testing of Tasks (e2e)', () => {
             })
     });
     it('Should create a task', async () => {
+        // Creamos la tarea con datos aleatorios
         const task = {
             title: faker.lorem.words(),
             description: faker.lorem.sentence(

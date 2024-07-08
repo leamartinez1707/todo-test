@@ -42,8 +42,8 @@ describe('Test of authentication (e2e)', () => {
         return request(app.getHttpServer())
             .post('/auth/login')
             .send({
-                email: 'Macy_Mitchell39@yahoo.com',
-                password: 'testing'
+                email: 'leandro@gmail.com',
+                password: '123456789'
             })
             .then((res) => {
                 expect(res.statusCode).toEqual(201)
