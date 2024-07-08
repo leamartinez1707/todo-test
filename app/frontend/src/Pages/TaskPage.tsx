@@ -40,16 +40,24 @@ export const TaskPage = () => {
       toast.error('Error al crear la tarea')
     }
   })
-  const deleteTaskById = async () => {
+  const deleteTaskById = async (e: { preventDefault: () => void }) => {
     if (params.id) {
-      const deleted = deleteTask(+params.id)
-      if (!deleted) return toast.error('Error al eliminar la tarea')
+      const confirmBox = window.confirm(
+        "Está seguro que desea eliminar la tarea?"
+      )
+      if (confirmBox === true) {
+        const deleted = deleteTask(+params.id)
+        if (!deleted) return toast.error('Error al eliminar la tarea')
+        reset()
+        toast.success(`Tarea ${params.id} eliminada con exito`)
+        navigate('/task/create')
+      } else {
+        e.preventDefault()
+      }
     } else {
       return toast.error('Error al eliminar la tarea')
     }
-    reset()
-    toast.success(`Tarea ${params.id} eliminada con exito`)
-    navigate('/task/create')
+
   }
 
   useEffect(() => {
@@ -87,10 +95,12 @@ export const TaskPage = () => {
               <nav className="my-4">
                 <Link to="/task/create" className="bg-green-300 hover:bg-green-500 px-2 sm:px-10 py-2 rounded-sm text-white text-xl font-bold cursor-pointer transition-colors">Nueva tarea</Link>
               </nav>
-              <button
-                onClick={deleteTaskById}
-                className="bg-red-400 hover:bg-red-600 p-2 sm:p-1 max-w-24 sm:max-w-36 rounded-sm sm:rounded-sm text-white text-sm font-bold cursor-pointer transition-colors">
-                Eliminar</button>
+              <nav className="flex items-center">
+                <button
+                  onClick={deleteTaskById}
+                  className="bg-red-400 hover:bg-red-600 p-2 sm:p-1 w-32 max-w-32 sm:max-w-36 rounded-sm sm:rounded-sm text-white text-xl font-bold cursor-pointer transition-colors">
+                  Eliminar</button>
+              </nav>
             </div>
             : null
 

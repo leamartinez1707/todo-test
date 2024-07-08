@@ -6,7 +6,6 @@ import { Task } from "../../types/types"
 import { toast } from "react-toastify"
 import { useTasks } from "../../hooks/useTasks"
 
-
 type OptionsProps = {
     task: Task
 }
@@ -25,17 +24,24 @@ export const Options = ({ task }: OptionsProps) => {
         }, 500);
     }
 
-    const handleDeleted = async (id: Task['id']) => {
-        const response = await deleteTask(id);
-        if (typeof response === 'string') return toast.error('No se pudo eliminar la tarea')
-        toast.success('Tarea eliminada')
-        setTaskUpdated(true)
-        setTimeout(() => {
-            setTaskUpdated(false)
-        }, 500);
+    const handleDeleted = async (id: Task['id'], e: { preventDefault: () => void }) => {
+
+        const confirmBox = window.confirm(
+            "Está seguro que desea eliminar la tarea?"
+        )
+        if (confirmBox === true) {
+            const response = await deleteTask(id);
+            if (!response.id) return toast.error('Error al eliminar la tarea')
+            toast.success(`Tarea ${response.id} eliminada con exito`)
+            setTaskUpdated(true)
+            setTimeout(() => {
+                setTaskUpdated(false)
+            }, 500);
+        } else {
+            e.preventDefault()
+        }
 
     }
-
 
     return (
         <Menu as="div" className="relative flex-none">
@@ -74,7 +80,7 @@ export const Options = ({ task }: OptionsProps) => {
                         <button
                             type='button'
                             className='flex w-full px-3 py-1 text-sm leading-6  duration-300 transition-colors hover:bg-red-200'
-                            onClick={() => handleDeleted(task.id)}
+                            onClick={(e) => handleDeleted(task.id, e)}
                         >
                             Eliminar
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="ml-1 size-4 text-red-500">
