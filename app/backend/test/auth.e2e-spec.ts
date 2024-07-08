@@ -39,11 +39,20 @@ describe('Test of authentication (e2e)', () => {
 
     })
     it('Should log in with credentials and create a token ', async () => {
+        // Creamos un usuario para luego ingresar con sus credenciales
+        const { body } = await request(app.getHttpServer())
+            .post('/auth/register')
+            .send({
+                name: faker.person.firstName(),
+                email: faker.internet.email(),
+                password: 'testing'
+            }).expect(201);
+        // Ingresamos con los datos del usuario creado
         return request(app.getHttpServer())
             .post('/auth/login')
             .send({
-                email: 'leandro@gmail.com',
-                password: '123456789'
+                email: body.email,
+                password: 'testing'
             })
             .then((res) => {
                 expect(res.statusCode).toEqual(201)
