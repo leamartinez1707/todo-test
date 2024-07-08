@@ -78,6 +78,28 @@ Para ejecutar los testing aplicados, debejemos ejecutar el comando:
 ```bash
   npm run test
 ```
+
+## Decisiónes técnicas más importantes
+
+### Backend
+
+**Seguridad:** Se utilizó JWT Service de NestJs para manejar la autenticación entre el frontend y el backend.
+**ServeStaticModule:** Módulo de NestJs que facilita el servicio de archivos estáticos desde el servidor, en este caso nos permite ejecutar el backend y frontend en una sola url.
+
+### Frontend
+**Estado global:** Se utilizó Context para manejar los estados globales, tanto para el sistema de autenticación como para la gestión de tareas.
+**Gestión de rutas:** Utilización de React Router para la navegación entre las diferentes vistas de la aplicación, como la lista de tareas, la página de detalles de una tarea y el perfil del usuario.
+**Componentes:** Se crearon componentes reutilizables para obtener un código limpio y fácil de mantener.
+**Manejo de errores:** Se utilizó React Hook Form para el manejo de errores en formularios.
+**Vite Proxy:** Configuración para poder especificar la URL del backend y poder redirigir las peticiones, permite simular entornos de producción y facilita el desarrollo al manejar automáticamente las políticas de CORS que podrían bloquear las solicitudes entre dominios durante el desarrollo local.
+
+### Aplicación
+
+Creación de un MonoRepo para unificar el Backend y el Frontend, tener el código de ambos proyectos en un solo repositorio para ejecutarlos simultaneamente.
+
+Turbo Repo: Proporciona herramientas y técnicas para optimizar el flujo de trabajo, simplifica el proceso de configuración de monorepos, pudiendo utilizar Scripts para ejecutar ambos proyectos a la vez a la hora de desarrollo o producción.
+
+
 ## Soporte
 
 En caso de precisar ayuda para ejecutar el código, o cualquier tipo de problema, comunicarse al mail leandromartinez.dev@gmail.com o en mi [Linkedin](https://www.linkedin.com/in/leandromartinezuy)
