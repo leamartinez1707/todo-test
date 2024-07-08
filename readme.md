@@ -1,9 +1,6 @@
 
 # **To Do App | React & Nestjs**
 
-## Bienvenidos a la mejor aplicación para controlar tus tareas diarias.
-Recordá que para conseguir tus logros, se necesita tomar acción diariamente, por eso con To Do App, podes crear, leer, actualizar y borrar todas tus tareas, para organizar tu día y completar todos tus objetivos.
-
 ## Arquitectura
 
 El proyecto sigue una arquitectura moderna basada en Cliente-servidor, utilizando NestJS para el backend, MySQL como base de datos y React para el frontend, proporcionando una separación clara de responsabilidades y una escalabilidad eficiente.
@@ -14,9 +11,10 @@ Frontend: Se utilizó React y Tailwind para crear una interfaz de usuario dinám
 
 Middleware de Autorización y autenticación: Este servicio verificará las credenciales del usuario (como email y contraseña) y generará un token JWT válido si las credenciales son correctas.
 Se utilizó un middleware de NestJS para validar y decodificar el token JWT enviado en las solicitudes protegidas. Este middleware verificará la validez del token y permitirá o denegará el acceso a recursos protegidos basados en los roles o permisos del usuario.
+
 ## Instrucciones para _ejecutar la aplicación_.
 
-Primero que nada, debemos clonar el proyecto en nuestro IDE (Recomiendo Visual Studio).
+Primero que nada, debemos clonar el proyecto, utilizando nuestro IDE. (Recomiendo Visual Studio)
 
   #### En la carpeta donde queremos clonarlo, en la terminal de visual studio ejecutamos:
   ```bash
@@ -85,8 +83,10 @@ Para ejecutar los testing aplicados, debejemos ejecutar el comando:
 
 **Seguridad:** Se utilizó JWT Service de NestJs para manejar la autenticación entre el frontend y el backend.
 **ServeStaticModule:** Módulo de NestJs que facilita el servicio de archivos estáticos desde el servidor, en este caso nos permite ejecutar el backend y frontend en una sola url.
+**Testing:** Se realizaron tests a todos los endpoint de la aplicación para verificar que la respuesta sea la correcta y validar toda la información.
 
 ### Frontend
+
 **Estado global:** Se utilizó Context para manejar los estados globales, tanto para el sistema de autenticación como para la gestión de tareas.
 **Gestión de rutas:** Utilización de React Router para la navegación entre las diferentes vistas de la aplicación, como la lista de tareas, la página de detalles de una tarea y el perfil del usuario.
 **Componentes:** Se crearon componentes reutilizables para obtener un código limpio y fácil de mantener.
@@ -97,7 +97,7 @@ Para ejecutar los testing aplicados, debejemos ejecutar el comando:
 
 Creación de un MonoRepo para unificar el Backend y el Frontend, tener el código de ambos proyectos en un solo repositorio para ejecutarlos simultaneamente.
 
-Turbo Repo: Proporciona herramientas y técnicas para optimizar el flujo de trabajo, simplifica el proceso de configuración de monorepos, pudiendo utilizar Scripts para ejecutar ambos proyectos a la vez a la hora de desarrollo o producción.
+**Turbo Repo:** Proporciona herramientas y técnicas para optimizar el flujo de trabajo, simplifica el proceso de configuración de monorepos, pudiendo utilizar Scripts para ejecutar ambos proyectos a la vez a la hora de desarrollo o producción.
 
 
 ## Soporte
